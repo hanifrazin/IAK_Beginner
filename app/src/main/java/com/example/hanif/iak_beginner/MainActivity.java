@@ -5,6 +5,11 @@ import android.os.Bundle;
 import android.util.Log;
 import android.widget.ImageView;
 import android.widget.TextView;
+import android.widget.Toast;
+
+import com.squareup.picasso.Callback;
+import com.squareup.picasso.Picasso;
+
 
 public class MainActivity extends AppCompatActivity {
 
@@ -16,6 +21,8 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_username;
     private TextView tv_password;
     private ImageView iv_picture;
+
+    private String link_picture = "https://www.robotshop.com/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/e/z/ez-robot-jd-humanoid-robot.jpg";
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -34,6 +41,19 @@ public class MainActivity extends AppCompatActivity {
 
         tv_username.setText(username_intent);
         tv_password.setText(password_intent);
+
+        Picasso.with(this).load(link_picture).into(iv_picture, new Callback() {
+
+            @Override
+            public void onSuccess() {
+                Toast.makeText(MainActivity.this, "Berhasl Load Image", Toast.LENGTH_SHORT).show();
+            }
+
+            @Override
+            public void onError() {
+                Toast.makeText(MainActivity.this, "Gagal Load Image", Toast.LENGTH_SHORT).show();
+            }
+        });
     }
 
     @Override
