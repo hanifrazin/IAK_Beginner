@@ -8,8 +8,14 @@
     tools:context="com.example.hanif.iak_beginner.MainActivity">
 
    <TextView
-       android:layout_width="wrap_content"
+       android:id="@+id/tv_username"
+       android:layout_width="match_parent"
        android:layout_height="wrap_content"
-       android:text="Hello"/>
+       tools:text="Username"/>
 
+   <TextView
+       android:id="@+id/tv_password"
+       android:layout_width="match_parent"
+       android:layout_height="wrap_content"
+       tools:text="Password"/>
 </LinearLayout>
