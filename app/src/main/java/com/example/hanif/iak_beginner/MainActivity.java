@@ -3,6 +3,7 @@ package com.example.hanif.iak_beginner;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.widget.ImageView;
 import android.widget.TextView;
 
 public class MainActivity extends AppCompatActivity {
@@ -14,6 +15,7 @@ public class MainActivity extends AppCompatActivity {
 
     private TextView tv_username;
     private TextView tv_password;
+    private ImageView iv_picture;
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
@@ -25,6 +27,7 @@ public class MainActivity extends AppCompatActivity {
 
         tv_username = findViewById(R.id.tv_username);
         tv_password = findViewById(R.id.tv_password);
+        iv_picture = findViewById(R.id.iv_picture);
 
         String username_intent = getIntent().getStringExtra(USERNAME);
         String password_intent = getIntent().getStringExtra(PASSWORD);
