@@ -1,9 +1,15 @@
 package com.example.hanif.iak_beginner;
 
+import android.content.Intent;
 import android.support.v7.app.AppCompatActivity;
 import android.os.Bundle;
 import android.util.Log;
+import android.view.Menu;
+import android.view.MenuInflater;
+import android.view.MenuItem;
+import android.view.View;
 import android.widget.ImageView;
+import android.widget.ProgressBar;
 import android.widget.TextView;
 import android.widget.Toast;
 
@@ -21,7 +27,9 @@ public class MainActivity extends AppCompatActivity {
     private TextView tv_username;
     private TextView tv_password;
     private ImageView iv_picture;
-
+    private ProgressBar pb_image;
+    private String username_intent;
+    private String password_intent;
     private String link_picture = "https://www.robotshop.com/media/catalog/product/cache/1/image/900x900/9df78eab33525d08d6e5fb8d27136e95/e/z/ez-robot-jd-humanoid-robot.jpg";
 
     @Override
@@ -35,25 +43,66 @@ public class MainActivity extends AppCompatActivity {
         tv_username = findViewById(R.id.tv_username);
         tv_password = findViewById(R.id.tv_password);
         iv_picture = findViewById(R.id.iv_picture);
+        pb_image = findViewById(R.id.pb_image);
 
-        String username_intent = getIntent().getStringExtra(USERNAME);
-        String password_intent = getIntent().getStringExtra(PASSWORD);
+        username_intent = getIntent().getStringExtra(USERNAME);
+        password_intent = getIntent().getStringExtra(PASSWORD);
 
         tv_username.setText(username_intent);
         tv_password.setText(password_intent);
+
+        setVisibleProgressBar();
 
         Picasso.with(this).load(link_picture).into(iv_picture, new Callback() {
 
             @Override
             public void onSuccess() {
+                setVisibleProgressBar();
                 Toast.makeText(MainActivity.this, "Berhasl Load Image", Toast.LENGTH_SHORT).show();
             }
 
             @Override
             public void onError() {
+                setVisibleProgressBar();
                 Toast.makeText(MainActivity.this, "Gagal Load Image", Toast.LENGTH_SHORT).show();
             }
         });
+    }
+
+    @Override
+    public boolean onCreateOptionsMenu(Menu menu) {
+        MenuInflater inflater = getMenuInflater();
+        inflater.inflate(R.menu.menu_activitiy,menu);
+        return true;
+    }
+
+    @Override
+    public boolean onOptionsItemSelected(MenuItem item) {
+        switch (item.getItemId()){
+            case R.id.refresh:
+                finish();
+                Intent intent = new Intent(this,MainActivity.class);
+                intent.putExtra(USERNAME,username_intent);
+                intent.putExtra(PASSWORD,password_intent);
+                startActivity(intent);
+                return true;
+            case R.id.logout:
+                finish();
+                startActivity(new Intent(this,LoginActivity.class));
+                return true;
+            default:
+                return super.onOptionsItemSelected(item);
+        }
+    }
+
+    private void setVisibleProgressBar(){
+        if(pb_image.getVisibility() == View.GONE){
+            pb_image.setVisibility(View.VISIBLE);
+            iv_picture.setVisibility(View.GONE);
+        }else{
+            pb_image.setVisibility(View.GONE);
+            iv_picture.setVisibility(View.VISIBLE);
+        }
     }
 
     @Override
